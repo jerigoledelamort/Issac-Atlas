@@ -15,9 +15,51 @@
 
 | ID | Date | Object | Status | Description | Evidence |
 |----|------|--------|--------|-------------|----------|
-| 0001 | | | 🟡 Hypothesis | | |
-| 0002 | | | 🟡 Hypothesis | | |
-| 0003 | | | 🟡 Hypothesis | | |
+| 0001 | | Project | 🟢 Confirmed | Создан проект Ghidra | Ghidra project |
+| 0002 | | Binary | 🟢 Confirmed | Импортирован isaac-ng.exe | Ghidra import |
+| 0003 | | Binary | 🟢 Confirmed | Подтверждён формат PE | PE header analysis |
+| 0004 | | Binary | 🟢 Confirmed | Подтверждена архитектура x86 | Ghidra analysis |
+| 0005 | | Binary | 🟢 Confirmed | Получены параметры бинарника | PE header fields |
+| 0006 | | Analysis | 🟢 Confirmed | Запущен Auto Analysis | Ghidra Auto Analysis |
+| 0007 | | Analysis | 🟢 Confirmed | Выполнен полный Auto Analysis | Ghidra Auto Analysis completed |
+| 0008 | | Binary | 🟢 Confirmed | Получен Binary Passport | PE header fields |
+| 0009 | | Binary | 🟢 Confirmed | Автоматически обнаружено 20918 функций | Ghidra function list |
+| 0010 | | Strings | 🟢 Confirmed | Обнаружено 16097 строк | Ghidra strings table |
+| 0011 | | PDB | 🟢 Confirmed | PDB отсутствует (ссылка: isaac-ng_Submission.pdb) | PE debug directory |
+| 0012 | | Namespaces | 🟢 Confirmed | Восстановлены namespaces: IsaacRepentancePlus, KAGE, luabridge, png, theoraplayer | Ghidra namespace analysis |
+| 0013 | | Resources | 🟢 Confirmed | Подтверждены пути: resources/, resources/scripts/, resources/packed/ | String references |
+| 0014 | | Resources | 🟢 Confirmed | Подтверждены packed-архивы: config.a, fonts.a, graphics.a, music.a, sfx.a, videos.a, animations.a | String references |
+| 0015 | | XML | 🟢 Confirmed | Подтверждены XML-конфигурации: players.xml, items.xml, pocketitems.xml, preload.xml, ambush.xml, bossoverlays.xml, giantbook.xml | String references |
+| 0016 | | Internal Strings | 🟢 Confirmed | Обнаружены: Binding of Isaac: Repentance+, IsaacIndicator, IconIsaacsRoom, ISAACNG_GSR, ISAACNG_SAVE04 | String table |
+| 0017 | | XREF Analysis | 🟢 Confirmed | players.xml имеет 3 XREF. Функция FUN_006f3c00 занимается подготовкой XML-данных | Ghidra XREF analysis |
+| 0018 | | Function | 🟢 Confirmed | FUN_006f3c00: выделение памяти, создание структур, копирование "players.xml", подготовка параметров парсинга | Ghidra decompiler |
+| 0019 | | Entry Point | 🟢 Confirmed | entry → FUN_00cfe315 → FUN_00cfe390. FUN_00cfe390 выполняет инициализацию CRT, не содержит игровой логики | Ghidra call graph |
+| 0020 | | x64dbg | 🟢 Confirmed | Подтверждены этапы запуска: Windows → ntdll.dll → TLS Callback → kernel32 → gdi32full → isaac-ng.exe | x64dbg session |
+| 0021 | | Steam Integration | 🟢 Confirmed | Steam блокирует выполнение под отладчиком (Application load error T:0000065432) | x64dbg session |
+| 0022 | | Lua VM | 🟢 Confirmed | FUN_008604C0 — главная функция инициализации Lua VM | Ghidra decompiler |
+| 0023 | | Lua VM | 🟢 Confirmed | FUN_008604C0: создаёт Lua State, подключает стандартные библиотеки, регистрирует типы | Ghidra decompiler |
+| 0024 | | Lua API | 🟢 Confirmed | FUN_00866960 — центральный реестр Lua API | Ghidra decompiler |
+| 0025 | | Lua API | 🟢 Confirmed | FUN_00866960: создаёт userdata, metatable, регистрирует классы и методы | Ghidra decompiler |
+| 0026 | | Lua Scripts | 🟢 Confirmed | FUN_0086E5E0 загружает enums.lua и main.lua | Ghidra decompiler |
+| 0027 | | Lua Callbacks | 🟢 Confirmed | _RunCallback и _UnloadMod извлекаются через luaL_ref() и сохраняются | Ghidra decompiler |
+| 0028 | | Lua Cleanup | 🟢 Confirmed | Глобальные переменные удаляются после инициализации (lua_pushnil + lua_setglobal) | Ghidra decompiler |
+| 0029 | | Lua Classes | 🟢 Confirmed | Зарегистрированы классы: Entity, EntityPlayer, EntityNPC, EntityTear, Sprite, Vector, Color, KColor, EntityRef, ProjectileParams, ItemConfig, PathFinder, Random, BitSet128 | Ghidra decompiler |
+| 0030 | | Lua API Mapping | 🟢 Confirmed | AddCoins → FUN_00759400, FireTear → FUN_00790AF0, AddCollectible → FUN_0075F0E0, FireBomb → FUN_007A0970 | Ghidra string references |
+| 0031 | | Lua Register | 🟢 Confirmed | FUN_00876530 — RegisterClass (вызывает FUN_008a6d90) | Ghidra decompiler |
+| 0032 | | Lua Register | 🟢 Confirmed | FUN_008a6d90 — создаёт Lua userdata/метатаблицу | Ghidra decompiler |
+| 0033 | | Lua Register | 🟢 Confirmed | FUN_00876650/670/6b0/710/770 — семейство функций RegisterMethod | Ghidra decompiler |
+| 0034 | | Lua RNG Class | 🟢 Confirmed | Класс RNG: GetSeed, SetSeed, RandomInt, RandomFloat | Ghidra string references |
+| 0035 | | Lua ProjectileParams | 🟢 Confirmed | Класс ProjectileParams: Acceleration, Spread, HomingStrength, CurvingStrength | Ghidra string references |
+| 0036 | | Lua Architecture | 🟢 Confirmed | API строится последовательными вызовами RegisterClass → RegisterMethod внутри FUN_00866960 | Ghidra decompiler |
+| 0037 | | Environment | 🟢 Confirmed | Ghidra 12.1.2 установлена и настроена | Ghidra installation |
+| 0038 | | RNG String | 🟢 Confirmed | Строка "RNG" подтверждена по адресу DAT_00b70764 | Ghidra data reference |
+| 0039 | | ProjectileParams | 🟢 Confirmed | Класс ProjectileParams: HeightModifier и другие параметры | Ghidra string references |
+| 0040 | | SSA Analysis | 🔴 Rejected | SSA-анализ через HighFunction/Pcode отклонён: слишком сложный, нестабильный API | Research evaluation |
+| 0041 | | CALL Analysis | 🟢 Confirmed | Многие вызовы косвенные (CALL ESI/EDI), простой линейный обход недостаточен | Ghidra instruction analysis |
+| 0042 | | GhidraScript | 🟢 Confirmed | Создан Java Ghidra Script ExtractLuaAPI.java | Script compilation successful |
+| 0043 | | Architecture | 🟢 Confirmed | Централизованная регистрация Lua API — возможна автоматизация восстановления | FUN_00866960 analysis |
+| 0044 | | | 🟡 Hypothesis | | |
+| 0045 | | | 🟡 Hypothesis | | |
 
 ---
 
@@ -71,4 +113,7 @@
 
 | Дата | Автор | Изменения |
 |------|-------|-----------|
-| | | |
+| | | Initial research log |
+| | | Added Binary Passport entries (0001-0011) |
+| | | Added Lua VM and API entries (0022-0036) |
+| | | Added Environment, RNG String, ProjectileParams, SSA Analysis, CALL Analysis, GhidraScript entries (0037-0043) |
