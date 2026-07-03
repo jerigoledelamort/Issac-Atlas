@@ -60,6 +60,24 @@
 | 0043 | | Architecture | 🟢 Confirmed | Централизованная регистрация Lua API — возможна автоматизация восстановления | FUN_00866960 analysis |
 | 0044 | | | 🟡 Hypothesis | | |
 | 0045 | | | 🟡 Hypothesis | | |
+| 0046 | | `FUN_009eb6b0` | 🟢 Confirmed | Это НЕ RNG. Функция занимается исключительно декодированием пользовательского seed в `uint32`. Не использует LCG, не имеет внутреннего состояния генератора. | Ghidra decompiler, call graph analysis |
+| 0047 | | `FUN_009eb6b0` | 🟢 Confirmed | Формат пользовательского seed: строка 9 символов `XXXX XXXX X` (4 символа + пробел + 4 символа + 1 checksum). Пробел на позиции 4. | Ghidra string validation code |
+| 0048 | | `FUN_009eb6b0` | 🟢 Confirmed | Алфавит seed: `ABCDEFGHJKLMNPQRSTWXYZ01234V6789` (32 символа, Base32-подобный). Исключены неоднозначные символы: I, O, U, W, 5, 1, 2, 6, 8. | Ghidra lookup table construction |
+| 0049 | | `FUN_009eb6b0` | 🟢 Confirmed | Lookup table размером 256 байт. Допустимые символы → 0..31, недопустимые → 0xFF. O(1) декодирование. | Ghidra decompiler |
+| 0050 | | `FUN_009eb6b0` | 🟢 Confirmed | Bit packing: 8 символов × 5 бит, последовательная упаковка `((((a<<5)|b)<<5|c)...`. Итог: 32-битное значение. | Ghidra decompiler |
+| 0051 | | `FUN_009eb6b0` | 🟢 Confirmed | XOR-константа: `0x0FEF7FFD`. Первая подтверждённая константа преобразования seed. | Ghidra decompiler |
+| 0052 | | `FUN_009eb6b0` | 🟢 Confirmed | Checksum: 9-й символ не входит в значение, используется для проверки. Вычисляется из первых 8 символов, сравнивается с декодированным 9-м. При несовпадении — ошибка. | Ghidra decompiler, comparison logic |
+| 0053 | | `FUN_009eb6b0` | 🟢 Confirmed | Возвращаемое значение: `uint32`. Это внутренний seed для системы RNG. Подтверждено разделение: String Seed → Decode → Internal Seed → RNG. | Ghidra return type analysis |
+| 0054 | | Seed Pipeline | 🟡 High Probability | Следующая стадия (RNG initialization после получения `uint32`) пока НЕ найдена. Требуется дальнейший поиск. | Call graph from FUN_009eb6b0 |
+| 0055 | | `FUN_009eb880` | 🟢 Confirmed | Инициализация RNG. Принимает готовый uint32 seed. Устанавливает initialized flag, текущее значение seed и три параметра сдвига. НЕ создает новый сид. | Ghidra decompiler, struct analysis |
+| 0056 | | RNG Structure | 🟢 Confirmed | Структура RNG содержит: initialized flag, текущее значение seed, три параметра сдвига (shift values). | Ghidra struct analysis |
+| 0057 | | `FUN_006ef890` | 🟢 Confirmed | Шаг RNG. Проверяет инициализацию и seed != 0. Обновляет seed по алгоритму XORSHIFT (Marsaglia): x ^= x >> a; x ^= x << b; x ^= x >> c. Не генерирует первоначальный сид. | Ghidra decompiler, algorithm analysis |
+| 0058 | | RNG Algorithm | 🟢 Confirmed | Подтверждён алгоритм XORSHIFT (George Marsaglia). FUN_006ef890 вычисляет только следующее состояние генератора, требует предварительной инициализации. | Ghidra decompiler |
+| 0059 | | RNG Pipeline | 🟢 Confirmed | Полная цепочка: uint32 StartSeed → FUN_009eb880(seed) → инициализация структуры RNG → FUN_006ef890() → следующее псевдослучайное значение. | Combined analysis |
+| 0060 | `FUN_009e9430` | | 🟢 Confirmed | Функция копирования структуры (CopyFrom / operator=). К RNG и генерации сидов отношения практически не имеет. | Ghidra decompiler |
+| 0061 | `FUN_00958cb0` | | 🟢 Confirmed | Не генерирует сид. Передает существующее значение в FUN_009eb880. Предположительно используется при загрузке сохранения, Continue, Daily Run, Challenge. | Ghidra call graph analysis |
+| 0062 | `FUN_006f72f0` | | 🟢 Confirmed | Очищает состояние предыдущего ранa, вызывает FUN_006ef890() и FUN_009eb880(...). Один из ключевых этапов начала нового забега. Источник StartSeed внутри функции не найден. | Ghidra decompiler, call graph |
+| 0063 | | StartSeed Source | 🔴 Not Found | Источник первоначального uint32 StartSeed при создании нового забега не найден. Текущая основная задача исследования. | Ongoing research |
 
 ---
 
@@ -117,3 +135,5 @@
 | | | Added Binary Passport entries (0001-0011) |
 | | | Added Lua VM and API entries (0022-0036) |
 | | | Added Environment, RNG String, ProjectileParams, SSA Analysis, CALL Analysis, GhidraScript entries (0037-0043) |
+| | | Added Seed Decoder entries (0046-0053) |
+| | | Added RNG Architecture entries: FUN_009eb880, FUN_006ef890, RNG Structure, XORSHIFT algorithm, full pipeline, related functions (0055-0063) |
