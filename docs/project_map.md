@@ -5,47 +5,64 @@
 | Поле | Значение |
 |------|----------|
 | Статус | 🟡 В заполнении |
-| Исследуемая версия | *не указана* |
-| Дата начала | *не указана* |
-| Дата обновления | *не указана* |
+| Исследуемая версия | v1.9.7.17 |
+| Дата начала | 06.07.2026 |
+| Дата обновления | 06.07.2026 |
 | Исследователь | *не указан* |
 
 ---
 
 ## Binary Passport
 
+> Полная спецификация: [research/binary-passport.md](../research/binary-passport.md)
+
 | Параметр | Значение | Статус |
 |----------|----------|--------|
+| Game | The Binding of Isaac: Repentance+ Beta | 🟢 Confirmed |
+| Version | v1.9.7.17 | 🟢 Confirmed |
 | Executable | isaac-ng.exe | 🟢 Confirmed |
 | Executable Format | Portable Executable (PE) | 🟢 Confirmed |
-| Architecture | x86 (32-bit) | 🟢 Confirmed |
+| Architecture | x86 (PE32, 32-bit) | 🟢 Confirmed |
+| Platform | Windows | 🟢 Confirmed |
 | Endianness | Little Endian | 🟢 Confirmed |
-| Compiler | Microsoft Visual Studio (точная версия пока неизвестна) | 🟢 Confirmed |
+| Compiler | Microsoft Visual Studio (Linker 14.29) | 🟢 Confirmed |
 | Image Base | 0x00400000 | 🟢 Confirmed |
+| AddressOfEntryPoint (RVA) | 0x00E310 | 🟢 Confirmed |
 | Minimum Address | 0x00400000 | 🟢 Confirmed |
 | Maximum Address | 0x00D2B807 | 🟢 Confirmed |
 | Relocatable | true | 🟢 Confirmed |
-| Section Alignment | 4096 | 🟢 Confirmed |
+| Section Alignment | 0x1000 (4096) | 🟢 Confirmed |
+| File Alignment | 0x0200 (512) | 🟢 Confirmed |
+| SizeOfImage | 0x92C000 | 🟢 Confirmed |
+| SizeOfCode | 0x716200 | 🟢 Confirmed |
+| SizeOfInitializedData | 0x14C000 | 🟢 Confirmed |
+| Subsystem | Windows GUI | 🟢 Confirmed |
+| DLLCharacteristics | 0x8140 (HIGH_ENTROPY_VA, NX_COMPAT, TERMINAL_SERVER_AWARE) | 🟢 Confirmed |
+| Characteristics | 0x0122 (EXECUTABLE_IMAGE, LARGE_ADDRESS_AWARE, 32BIT_MACHINE) | 🟢 Confirmed |
+| Sections | 6 (.text, .rdata, .data, .rsrc, .reloc, .bind) | 🟢 Confirmed |
 | Auto Analysis | Completed successfully | 🟢 Confirmed |
 | Functions Discovered | 20918 | 🟢 Confirmed |
 | Strings Discovered | 16097 | 🟢 Confirmed |
 | PDB Status | Absent (reference: isaac-ng_Submission.pdb) | 🟢 Confirmed |
+| SHA-256 | 3BDFC8BAE0DC7E334B76009D0AD45DFBB16EE5F00C06FFBC3A0094E34DD44616B | 🟢 Confirmed |
+| MD5 | 2FA5097A4EF74194821D13A5CAE7B304 | 🟢 Confirmed |
+| File Size | 9 362 440 bytes | 🟢 Confirmed |
 
 ---
 
 ## Executable Information
 
-| Параметр | Значение |
-|----------|----------|
-| Имя файла | |
-| Путь | |
-| Размер (байт) | |
-| Архитектура | |
-| Компилятор | |
-| Дата компиляции | |
-| CRC32 | |
-| SHA-256 | |
-| MD5 | |
+| Параметр | Значение | Статус |
+|----------|----------|--------|
+| Имя файла | isaac-ng.exe | 🟢 Confirmed |
+| Путь | *не указан* | 🟡 |
+| Размер (байт) | 9 362 440 | 🟢 Confirmed |
+| Архитектура | x86 (PE32) | 🟢 Confirmed |
+| Компилятор | Microsoft Visual Studio (Linker 14.29) | 🟢 Confirmed |
+| Дата компиляции | TimeDateStamp: 0x69E6E3A7 | 🟢 Confirmed |
+| CRC32 | Checksum: 0 (не используется) | 🟢 Confirmed |
+| SHA-256 | 3BDFC8BAE0DC7E334B76009D0AD45DFBB16EE5F00C06FFBC3A0094E34DD44616B | 🟢 Confirmed |
+| MD5 | 2FA5097A4EF74194821D13A5CAE7B304 | 🟢 Confirmed |
 
 ---
 
@@ -113,8 +130,8 @@ FUN_00cfe390 (CRT initialization only)
 
 | Функция | Библиотека | Адрес | Назначение |
 |---------|------------|-------|------------|
-| | | | |
-| | | | |
+| 06.07.2026 | | 06.07.2026 | |
+| 06.07.2026 | | 06.07.2026 | |
 
 ---
 
@@ -122,8 +139,8 @@ FUN_00cfe390 (CRT initialization only)
 
 | Символ | Адрес | Тип | Описание |
 |--------|-------|-----|----------|
-| | | | |
-| | | | |
+| 06.07.2026 | | 06.07.2026 | |
+| 06.07.2026 | | 06.07.2026 | |
 
 ---
 
@@ -133,8 +150,8 @@ FUN_00cfe390 (CRT initialization only)
 
 | Имя класса | Адрес vtable | Размер | Наследование |
 |------------|--------------|--------|--------------|
-| | | | |
-| | | | |
+| 06.07.2026 | | 06.07.2026 | |
+| 06.07.2026 | | 06.07.2026 | |
 
 ### Иерархия классов
 
@@ -152,18 +169,18 @@ FUN_00cfe390 (CRT initialization only)
 
 | Строка | Адрес | Контекст |
 |--------|-------|----------|
-| resources/ | | Базовая директория ресурсов |
-| resources/scripts/ | | Скрипты Lua |
-| resources/scripts/main.lua | | Главный скрипт |
-| resources/scripts/enums.lua | | Скрипт перечислений |
-| resources/packed/ | | Директория packed-архивов |
-| resources/packed/config.a | | Архив конфигураций |
-| resources/packed/fonts.a | | Архив шрифтов |
-| resources/packed/graphics.a | | Архив графики |
-| resources/packed/music.a | | Архив музыки |
-| resources/packed/sfx.a | | Архив звуковых эффектов |
-| resources/packed/videos.a | | Архив видео |
-| resources/packed/animations.a | | Архив анимаций |
+| resources/ | 06.07.2026 | Базовая директория ресурсов |
+| resources/scripts/ | 06.07.2026 | Скрипты Lua |
+| resources/scripts/main.lua | 06.07.2026 | Главный скрипт |
+| resources/scripts/enums.lua | 06.07.2026 | Скрипт перечислений |
+| resources/packed/ | 06.07.2026 | Директория packed-архивов |
+| resources/packed/config.a | 06.07.2026 | Архив конфигураций |
+| resources/packed/fonts.a | 06.07.2026 | Архив шрифтов |
+| resources/packed/graphics.a | 06.07.2026 | Архив графики |
+| resources/packed/music.a | 06.07.2026 | Архив музыки |
+| resources/packed/sfx.a | 06.07.2026 | Архив звуковых эффектов |
+| resources/packed/videos.a | 06.07.2026 | Архив видео |
+| resources/packed/animations.a | 06.07.2026 | Архив анимаций |
 
 ### XML-конфигурации
 
@@ -347,10 +364,10 @@ FUN_00866960 регистрирует весь Lua API игры:
 
 | Параметр | Значение |
 |----------|----------|
-| Адрес начала | |
-| Адрес окончания | |
-| Размер | |
-| Зависимости | |
+| Адрес начала | 06.07.2026 |
+| Адрес окончания | 06.07.2026 |
+| Размер | 06.07.2026 |
+| Зависимости | 06.07.2026 |
 
 **Описание:**
 
@@ -358,8 +375,8 @@ FUN_00866960 регистрирует весь Lua API игры:
 
 | Функция | Адрес | Назначение | Статус |
 |---------|-------|------------|--------|
-| | | | 🟡 |
-| | | | 🟡 |
+| 06.07.2026 | | 06.07.2026 | 🟡 |
+| 06.07.2026 | | 06.07.2026 | 🟡 |
 
 ---
 
@@ -444,4 +461,5 @@ isaac-ng.exe
 
 | Дата | Автор | Изменения |
 |------|-------|-----------|
-| | | |
+| 06.07.2026 | NLP-Core-Team | Обновлён Binary Passport: версия v1.9.7.17, хеши, полные PE-заголовки, размер файла, секции |
+| 2026 | 06.07.2026 | |

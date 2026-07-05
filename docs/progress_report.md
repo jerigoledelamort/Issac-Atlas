@@ -4,9 +4,10 @@
 
 | Поле | Значение |
 |------|----------|
-| Дата | 2024 |
+| Дата | 06.07.2026 |
 | Этап | Stage 1 — Reverse Engineering |
 | Статус | 🟡 В процессе |
+| Версия игры | v1.9.7.17 |
 
 ---
 
@@ -232,6 +233,33 @@ RNG initialization
 
 ---
 
+## Бинарный паспорт
+
+**Status:** 🟢 Confirmed
+
+**Дата:** 06.07.2026
+
+Зафиксированы полные подтверждённые данные исследуемого бинарника `isaac-ng.exe`:
+
+| Параметр | Значение |
+|----------|----------|
+| Game | The Binding of Isaac: Repentance+ Beta |
+| Version | v1.9.7.17 |
+| Platform | Windows |
+| Architecture | x86 (PE32) |
+| SHA-256 | 3BDFC8BAE0DC7E334B76009D0AD45DFBB16EE5F00C06FFBC3A0094E34DD44616B |
+| MD5 | 2FA5097A4EF74194821D13A5CAE7B304 |
+| File Size | 9 362 440 bytes |
+| ImageBase | 0x00400000 |
+| EntryRVA | 0x00E310 |
+| Sections | 6 (.text, .rdata, .data, .rsrc, .reloc, .bind) |
+| Linker | 14.29 |
+| Subsystem | Windows GUI |
+
+Полная спецификация: [research/binary-passport.md](../research/binary-passport.md)
+
+---
+
 ## Следующий этап
 
 ### ExtractLuaAPI Version 2
@@ -253,4 +281,5 @@ RNG initialization
 
 | Дата | Изменения |
 |------|-----------|
-| | Initial report |
+| 06.07.2026 | Добавлен раздел "Бинарный паспорт" с подтверждёнными PE-данными. Обновлена версия игры до v1.9.7.17 |
+| 2026 | Initial report |

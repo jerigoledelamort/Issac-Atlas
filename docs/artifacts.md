@@ -202,8 +202,8 @@
 
 | Дата | Изменения |
 |------|-----------|
-| | Initial artifact documentation |
-| | Added Resource Archives, XML Configurations, Lua Scripts |
-| | Added Lua VM Functions, Lua API Entry Points, Lua API Mappings, Lua Registered Classes |
-| | Added Lua RNG Class, Lua ProjectileParams Class, Lua Registration Functions |
-| | Added Ghidra Scripts section (ExtractLuaAPI.java, ExtractLuaAPI_SSA.java) |
+| 2026 | Initial artifact documentation |
+| 2026 | Added Resource Archives, XML Configurations, Lua Scripts |
+| 2026 | Added Lua VM Functions, Lua API Entry Points, Lua API Mappings, Lua Registered Classes |
+| 2026 | Added Lua RNG Class, Lua ProjectileParams Class, Lua Registration Functions |
+| 2026 | Added Ghidra Scripts section (ExtractLuaAPI.java, ExtractLuaAPI_SSA.java) |

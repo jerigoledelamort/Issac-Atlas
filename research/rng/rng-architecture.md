@@ -264,4 +264,4 @@ uint32 RNG_Step() {
 
 | Дата | Автор | Изменения |
 |------|-------|-----------|
-| *текущая* | NLP-Core-Team | Initial architecture documentation |
+| 06.07.2026 | NLP-Core-Team | Initial architecture documentation |
