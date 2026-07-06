@@ -88,6 +88,14 @@
 | 0070 | 06.07.2026 | `FUN_0040cf50` | 🟢 Confirmed | Вспомогательная функция копирования std::string. Реализация с Small String Optimization (SSO). Не относится к генерации сидов. Используется только для копирования строки перед дальнейшей обработкой. | Ghidra decompiler |
 | 0071 | 06.07.2026 | `FUN_00917a50` | 🟢 Confirmed | Загрузка пользовательского профиля / восстановление состояния. Вызов FUN_009eb880 внутри используется для восстановления уже существующего состояния RNG. Функция НЕ создаёт новый StartSeed. | Ghidra decompiler, call graph analysis |
 | 0072 | 06.07.2026 | StartSeed Source | 🟢 Confirmed | Из шести известных вызовов FUN_009eb880 исследованы и классифицированы: FUN_009eb7f0 — Lua SetStartSeed (Custom Seed); FUN_00958cb0 — использует уже существующий seed; FUN_00917a50 — восстановление состояния из профиля; FUN_00948fc0 — исследована частично, создание StartSeed не подтверждено; FUN_006f72f0 — подготовка уже существующего забега; FUN_009eb950 — ещё не исследована. Подтверждений, что какая-либо из исследованных функций создаёт первоначальный StartSeed, не найдено. | Call graph analysis, decompiler |
+| 0073 | 06.07.2026 | `FUN_009eb5b0` | 🟢 Confirmed | Преобразование внутреннего 32-битного StartSeed (uint32) в пользовательскую строку вида "XXXX XXXX". Используется функциями GetStartSeedString() и несколькими сценариями запуска. Цепочка: Game.StartSeed (uint32) → FUN_009eb5b0 → Seed String. Функция не генерирует сид. | Ghidra decompiler, XREF analysis |
+| 0074 | 06.07.2026 | `FUN_009eb6b0` | 🟢 Confirmed | Обратное преобразование: строка "XXXX XXXX" → uint32. Используется при вводе пользовательского сида, загрузке специальных режимов, восстановлении RNG из строкового представления. Функция не генерирует сид. | Ghidra decompiler, call graph analysis |
+| 0075 | 06.07.2026 | `FUN_009eb880` | 🟢 Confirmed | Инициализация RNG по уже существующему uint32. При нулевом значении вызывает аварийную остановку ("RNG Seed is zero!"). Использует последовательность XORShift. Заполняет внутренний буфер RNG. Функция не создаёт StartSeed. | Ghidra decompiler, crash analysis |
+| 0076 | 06.07.2026 | `FUN_009eb7f0` | 🟢 Confirmed | Цепочка: Seed String → FUN_009eb6b0() → uint32 → FUN_009eb880() → RNG. Создание RNG по строковому пользовательскому сиду. Функция не участвует в генерации нового StartSeed. | Ghidra decompiler, call graph |
+| 0077 | 06.07.2026 | DAT_00c71678 | 🟡 Hypothesis | Глобальный указатель на объект Game. Наблюдения: более 10 000 чтений, всего две записи, обе во время инициализации игры. Гипотеза: глобальный указатель на объект Game. | Ghidra data reference, XREF analysis |
+| 0078 | 06.07.2026 | `FUN_00952410` / `FUN_00959720` | 🟢 Confirmed | Обе функции записывают DAT_00c71678. Выполняется создание объекта Game, DAT_00c71678 получает адрес нового объекта. StartSeed внутри этих функций не создаётся. Генерация StartSeed происходит позже. | Ghidra decompiler, call graph |
+| 0079 | 06.07.2026 | `FUN_009e9320` | 🔴 Rejected | Первоначальная гипотеза: возможная генерация StartSeed. Опровергнуто. Функция — копирование сложного объекта (copy constructor / operator=): копирование полей, копирование STL-контейнеров, отсутствие логики генерации RNG или StartSeed. К генерации сидов отношения не имеет. | Ghidra decompiler |
+| 0080 | 06.07.2026 | x32dbg | 🟢 Confirmed | Breakpoint на FUN_009eb6b0 не срабатывает во время создания обычного нового забега. Вывод: обычный New Run не проходит через путь декодирования строкового сида. Дополнительно подтверждает существование отдельной цепочки генерации StartSeed. | x32dbg session |
 
 ---
 
@@ -153,3 +161,7 @@
 | 06.07.2026 | - | Added FUN_0040cf50 std::string copy with SSO (0070) |
 | 06.07.2026 | - | Added FUN_00917a50 profile restore analysis (0071) |
 | 06.07.2026 | - | Updated StartSeed Source: 6 FUN_009eb880 callers classified, no initial StartSeed creation confirmed (0072) |
+| 06.07.2026 | - | Added StartSeed chain: FUN_009eb5b0 (uint32→String), FUN_009eb6b0 reconfirmed (String→uint32), FUN_009eb880 zero crash behavior, FUN_009eb7f0 full chain (0073-0076) |
+| 06.07.2026 | - | Added DAT_00c71678 global Game pointer hypothesis, FUN_00952410/FUN_00959720 Game object creation (0077-0078) |
+| 06.07.2026 | - | Rejected FUN_009e9320 as StartSeed generator: complex object copy (0079) |
+| 06.07.2026 | - | x32dbg: BP on FUN_009eb6b0 doesn't trigger on New Run, confirms separate StartSeed chain (0080) |
