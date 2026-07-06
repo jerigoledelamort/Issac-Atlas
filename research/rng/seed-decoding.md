@@ -183,8 +183,8 @@ RNG initialization
 | № | Стадия | Статус |
 |---|--------|--------|
 | 1 | `Пользовательский seed (строка)` → `FUN_009eb6b0` → `Internal uint32 seed` | ✅ Подтверждено |
-| 2 | `Internal uint32 seed` → `FUN_009eb880` → `RNG initialization` | ✅ Подтверждено |
-| 3 | `RNG (инициализирован)` → `FUN_006ef890` → `Next PRNG value` | ✅ Подтверждено |
+| 2 | `Internal uint32 seed` → `FUN_009eb880` → `RNG initialization` (shift: 3/17/25, fallback FUN_006eeF60 при seed==0) | ✅ Подтверждено |
+| 3 | `RNG (инициализирован)` → `FUN_006ef890` → `Next PRNG value` (XORSHIFT Marsaglia) | ✅ Подтверждено |
 | 4 | Источник первоначального `StartSeed` при создании нового забега | 🔴 Не найден |
 
 ---

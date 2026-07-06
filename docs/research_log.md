@@ -83,6 +83,11 @@
 | 0065 | 06.07.2026 | Binary | 🟢 Confirmed | IMAGE_OPTIONAL_HEADER: Magic 0x10B (PE32), Linker 14.29, ImageBase 0x00400000, EntryRVA 0x00E310, SizeOfImage 0x92C000, Subsystem Windows GUI, DLLCharacteristics 0x8140 | PE header analysis |
 | 0066 | 06.07.2026 | Binary | 🟢 Confirmed | Секции: .text, .rdata, .data, .rsrc, .reloc, .bind (6 секций) | PE section analysis |
 | 0067 | 06.07.2026 | Binary Passport | 🟢 Confirmed | Создан полный binary-passport.md с PE-заголовками, хешами и метаданными | research/binary-passport.md |
+| 0068 | 06.07.2026 | `FUN_009eb7f0` | 🟢 Confirmed | Это НЕ функция создания StartSeed. Обработчик Lua API: Seeds:SetStartSeed(). Принимает строковый пользовательский сид, вызывает FUN_009eb6b0 (String2Seed) для получения uint32, передаёт его в FUN_009eb880 (инициализация RNG). Назначение: установка пользовательского Custom Seed. | Ghidra decompiler, call graph, Lua API string references |
+| 0069 | 06.07.2026 | `FUN_009eb880` | 🟢 Confirmed | Инициализация структуры RNG подтверждена. Принимает готовый uint32 seed, сохраняет seed. Если seed == 0 — вызывает FUN_006eeF60 для получения резервного ненулевого значения. Устанавливает параметры XORSHIFT: shift1=3, shift2=17, shift3=25. Прогревает внутреннее состояние RNG. НЕ создаёт первоначальный StartSeed. | Ghidra decompiler, struct analysis |
+| 0070 | 06.07.2026 | `FUN_0040cf50` | 🟢 Confirmed | Вспомогательная функция копирования std::string. Реализация с Small String Optimization (SSO). Не относится к генерации сидов. Используется только для копирования строки перед дальнейшей обработкой. | Ghidra decompiler |
+| 0071 | 06.07.2026 | `FUN_00917a50` | 🟢 Confirmed | Загрузка пользовательского профиля / восстановление состояния. Вызов FUN_009eb880 внутри используется для восстановления уже существующего состояния RNG. Функция НЕ создаёт новый StartSeed. | Ghidra decompiler, call graph analysis |
+| 0072 | 06.07.2026 | StartSeed Source | 🟢 Confirmed | Из шести известных вызовов FUN_009eb880 исследованы и классифицированы: FUN_009eb7f0 — Lua SetStartSeed (Custom Seed); FUN_00958cb0 — использует уже существующий seed; FUN_00917a50 — восстановление состояния из профиля; FUN_00948fc0 — исследована частично, создание StartSeed не подтверждено; FUN_006f72f0 — подготовка уже существующего забега; FUN_009eb950 — ещё не исследована. Подтверждений, что какая-либо из исследованных функций создаёт первоначальный StartSeed, не найдено. | Call graph analysis, decompiler |
 
 ---
 
@@ -143,3 +148,8 @@
 | 06.07.2026 | - | Added Seed Decoder entries (0044-0051) |
 | 06.07.2026 | - | Added RNG Architecture entries: FUN_009eb880, FUN_006ef890, RNG Structure, XORSHIFT algorithm, full pipeline, related functions (0053-0061) |
 | 06.07.2026 | - | Added Binary Passport entries: version, hashes, PE headers, sections (0062-0067) |
+| 06.07.2026 | - | Added FUN_009eb7f0 Lua SetStartSeed analysis (0068) |
+| 06.07.2026 | - | Added FUN_009eb880 detailed RNG init analysis with shift params and FUN_006eeF60 fallback (0069) |
+| 06.07.2026 | - | Added FUN_0040cf50 std::string copy with SSO (0070) |
+| 06.07.2026 | - | Added FUN_00917a50 profile restore analysis (0071) |
+| 06.07.2026 | - | Updated StartSeed Source: 6 FUN_009eb880 callers classified, no initial StartSeed creation confirmed (0072) |
