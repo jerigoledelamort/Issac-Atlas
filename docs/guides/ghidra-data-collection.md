@@ -79,9 +79,9 @@
 
 | Данные | Куда записать |
 |--------|---------------|
-| Список функций | [research/exports/functions.csv](../../research/exports/) |
-| Адреса функций | [research/exports/functions.csv](../../research/exports/) |
-| Сигнатуры | [research/exports/functions.csv](../../research/exports/) |
+| Список функций | `docs/project_map.md` (раздел Major Subsystems) |
+| Адреса функций | `docs/project_map.md` |
+| Сигнатуры | `docs/project_map.md` |
 
 ### 8. Граф вызовов
 
@@ -89,8 +89,8 @@
 
 | Данные | Куда записать |
 |--------|---------------|
-| Граф entry point | [research/callgraphs/entry_point.png](../../research/callgraphs/) |
-| Графы основных функций | [research/callgraphs/](../../research/callgraphs/) |
+| Граф entry point | `docs/project_map.md` (раздел Call Graph) |
+| Графы основных функций | `docs/project_map.md` |
 
 ### 9. Определённые типы данных
 
@@ -98,9 +98,9 @@
 
 | Данные | Куда записать |
 |--------|---------------|
-| Структуры | [research/exports/structures.xml](../../research/exports/) |
-| Перечисления | [research/exports/enumerations.xml](../../research/exports/) |
-| Классы | [research/exports/classes.xml](../../research/exports/) |
+| Структуры | `docs/project_map.md` (раздел RTTI) |
+| Перечисления | `docs/project_map.md` |
+| Классы | `docs/project_map.md` |
 
 ---
 

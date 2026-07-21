@@ -32,7 +32,6 @@
 
 - Engine не зависит от Atlas
 - Atlas использует Engine через публичный API
-- Общая логика размещается в `shared/`
 
 ---
 
@@ -95,9 +94,7 @@
 
 - `engine` — изменения в Isaac Engine
 - `atlas` — изменения в Isaac Atlas
-- `shared` — общие компоненты
 - `research` — исследования
-- `reverse` — reverse engineering
 - `docs` — документация
 - `tests` — тесты
 - `ci` — CI/CD
